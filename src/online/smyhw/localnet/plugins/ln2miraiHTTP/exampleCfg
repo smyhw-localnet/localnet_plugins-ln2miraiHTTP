@@ -1,0 +1,4 @@
+host=127.0.0.1
+port=8080
+//请修改为mirai-http-api配置文件中的相同值
+authKey=123456
