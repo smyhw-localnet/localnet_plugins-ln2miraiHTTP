@@ -13,7 +13,7 @@ import online.smyhw.localnet.command.cmdManager;
 import online.smyhw.localnet.data.DataManager;
 import online.smyhw.localnet.data.DataPack;
 import online.smyhw.localnet.data.config;
-import online.smyhw.localnet.event.ChatINFO_Event;
+import online.smyhw.localnet.event.Chat_Event;
 import online.smyhw.localnet.event.EventManager;
 import online.smyhw.localnet.lib.Json;
 import online.smyhw.localnet.lib.Exception.Json_Parse_Exception;

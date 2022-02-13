@@ -33,11 +33,11 @@ public class ForMirai
 		String authKey = cfg.get_String("authKey", "未找到");
 		message.info("[ln2miraiHTTP]:配置信息<[authKey="+authKey+"],[apiURL="+MiraiHTTP_host+"]>");
 		message.info("[ln2miraiHTTP]:向mirai注册...");
-		String tmp1 = WebAPI.simplePost(MiraiHTTP_host+"auth", "{\"authKey\": \""+authKey+"\"}");
+		String tmp1 = WebAPI.simplePost(MiraiHTTP_host+"verify", "{\"verifyKey\": \""+authKey+"\"}");
 		Map tmp2 = parseRE(tmp1);
 		session = (String) tmp2.get("session");
 		message.info("[ln2miraiHTTP]:获取到session<"+session+">");
-		tmp1 = WebAPI.simplePost(MiraiHTTP_host+"verify","{\"sessionKey\": \""+session+"\",\"qq\": "+Long.parseLong(cfg.get_String("QQ", "未找到"))+"}");
+		tmp1 = WebAPI.simplePost(MiraiHTTP_host+"bind","{\"sessionKey\": \""+session+"\",\"qq\": "+Long.parseLong(cfg.get_String("QQ", "未找到"))+"}");
 		message.info("[ln2miraiHTTP]:认证session<"+tmp1+">");
 		message.info("[ln2miraiHTTP]:初始化完成");
 		//TODO
@@ -75,10 +75,18 @@ public class ForMirai
 	{
 		List<Long> re = new ArrayList<Long>();
 		String tmp1 = WebAPI.simpleGet(MiraiHTTP_host+"groupList?sessionKey="+session);
-		List<Map> tmp2 = JSON.parseObject(tmp1, List.class);
-		for(int num=0;num<tmp2.size();num++)
+		//远古
+		//		List<Map> tmp2 = JSON.parseObject(tmp1, List.class);
+		//	for(int num=0;num<tmp2.size();num++)
+		//	{
+		//		long id = Long.valueOf(tmp2.get(num).get("id")+"");
+		//		re.add(id);
+		//	}
+		Map tmp2 = parseRE(tmp1);
+		List<Map> tmp3 = (List<Map>) tmp2.get("data");
+		for(int num=0;num<tmp3.size();num++)
 		{
-			long id = Long.valueOf(tmp2.get(num).get("id")+"");
+			long id = Long.valueOf(tmp3.get(num).get("id")+"");
 			re.add(id);
 		}
 		return re;
